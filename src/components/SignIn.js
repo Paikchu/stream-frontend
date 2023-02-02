@@ -29,7 +29,7 @@ class SignIn extends React.Component{
                 body: JSON.stringify({u_email: this.state.email, u_pwd: this.state.password})
             }).then((response) => response.json())
                 .then((result) => {
-                    console.log(result.code);
+                    console.log(result.message);
                 })
                 .catch((error) => console.log("error"));
         }
