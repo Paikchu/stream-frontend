@@ -33,3 +33,9 @@ li a {
 li a:hover {
     background-color: #111;
 }
+
+.main-body {
+    display: block;
+    width: 1000px;
+    margin: auto;
+}

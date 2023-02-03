@@ -1,4 +1,5 @@
 import React from "react";
+import "./Style.css"
 
 class HomeBody extends React.Component{
     constructor(props) {
@@ -17,7 +18,7 @@ class HomeBody extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="main-body">
                 <h1>Welcome to streamy</h1>
             </div>
         );
