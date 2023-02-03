@@ -6,20 +6,26 @@ class HomeBody extends React.Component{
         super(props);
         this.state = {
             games: [],
+            finishedLoading: true
         }
     }
 
-    componentDidMount() {
-        this.loadGames();
-    }
-
-   loadGames() {
+    async componentDidMount() {
+        fetch("http://localhost:3000/home").then(
+            response => {
+                //console.log(response.json());
+                this.setState({games: response.json()})
+            },
+            error => {
+                console.log(error.response.data)
+            }
+        )
     }
 
     render(){
         return(
             <div className="main-body">
-                <h1>Welcome to streamy</h1>
+                <h1>Welecome to streamy</h1>
             </div>
         );
     };

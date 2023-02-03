@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
     },
     {
-        path: "/sign-in",
+        path: "/user-sign-in",
         element: <SignIn/>,
         errorElement: <ErrorPage />,
     },
@@ -28,7 +28,9 @@ function App() {
     return (
         <div>
             <NavBarG />
-            <RouterProvider router={router} />
+            <div className="PageBody">
+                <RouterProvider router={router} />
+            </div>
         </div>
     );
 }
