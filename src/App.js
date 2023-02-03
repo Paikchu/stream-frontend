@@ -1,26 +1,35 @@
 import React from 'react';
-import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home';
+import HomeBody from './components/HomeBody';
 import ErrorPage from "./pages/Error";
 import SignIn from "./components/SignIn";
+import NavBarG from "./components/NavBarG";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <HomeBody />,
         errorElement: <ErrorPage />,
     },
     {
-        path: "sign-in",
+        path: "/home",
+        element: <HomeBody />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/sign-in",
         element: <SignIn/>,
+        errorElement: <ErrorPage />,
     },
 ]);
 
 
 function App() {
     return (
-        <RouterProvider router={router} />
+        <div>
+            <NavBarG />
+            <RouterProvider router={router} />
+        </div>
     );
 }
 
