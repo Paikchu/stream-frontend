@@ -1,33 +1,54 @@
 import React from "react";
 import "./Style.css"
+import GameBlock from "./GameBlock";
+import GameSeek from "./GameSeek";
 
 class HomeBody extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             games: [],
-            finishedLoading: true
+            dataloaded: false
         }
     }
-
-    async componentDidMount() {
-        fetch("http://localhost:3000/home").then(
-            response => {
-                //console.log(response.json());
-                this.setState({games: response.json()})
-            },
-            error => {
-                console.log(error.response.data)
-            }
-        )
+     async componentDidMount() {
+        let gamelist = [];
+         fetch("/home")
+             .then((response)=>response.json())
+             .then((val)=>{
+                 //console.log(typeof val)
+                 val.map((Obj)=>{
+                     //console.log(Obj);
+                     gamelist.push(Obj)
+                     return (
+                         <div>{Obj.g_name}</div>
+                     )
+                 })
+             });
+         this.setState({dataloaded: true, games: gamelist})
     }
 
+    componentWillUnmount() {
+        this.setState({dataloaded: false})
+    }
+
+    saveGame = (games) => {
+        this.setState({games: games})
+    }
     render(){
-        return(
-            <div className="main-body">
-                <h1>Welecome to streamy</h1>
-            </div>
-        );
+        //console.log(this.state.games)
+        console.log(this.state.dataloaded)
+        if(this.state.dataloaded){
+            //console.log(this.state.games.result)
+            return(
+                <React.StrictMode>
+                    <div className="main-body">
+                        <GameSeek saveGame={this.saveGame}/>
+                        <GameBlock games={this.state.games}/>
+                    </div>
+                </React.StrictMode>
+            );
+        }
     };
 }
 
