@@ -1,31 +1,45 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Style.css"
 
-export default class GameBlock extends React.Component {
-    games= [];
-    render() {
-        console.log("Game blocking...")
-        return (
-            <div>
-                <div className="row">
-                    {
-                        this.props.games.map((gameObj)=>{
-                            //console.log(gameObj.g_name)
-                            return (
-                                <div key={gameObj.g_id} className="card">
-                                    <a rel="noreferrer" href="https://github.com" target="_blank">
-                                        <img className="homepage-display" style={{width: 200}} src={require("..//PlaceHolder.png")} alt={gameObj.g_tag}/>
-                                    </a>
-                                    <div className="card-text">{gameObj.g_name}</div>
-                                    <div className="card-text">{gameObj.g_price}</div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <p>??????????????????</p>
-            </div>
-        )
+const GameBlock = () => {
+    const [data, setData] = useState(null);
+
+    const fetchData = () => {
+        fetch('home')
+            .then(response => response.json())
+            .then(data => {
+                setData(data);
+            });
+    };
+
+    useEffect(()=>{
+        fetchData();
+    },[]);
+
+    if (!data) {
+        return <div>Loading...</div>;
     }
-}
+
+    return (
+        <div>
+            {data ? (
+                <div>
+                    {data.map(item => (
+                        <div className="display-block">
+                            <a rel="noreferrer" href="https://store.steampowered.com/" target="_blank">
+                                <img src={require("..//PlaceHolder.png")} style={{width: 200}}/>
+                                <p key={item.g_id}>{item.g_name}</p>
+                                <a>{item.g_price}</a>
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>Loading data...</p>
+            )}
+        </div>
+    );
+};
+
+export default GameBlock;
 //<img className="homepage-display" style={{width: 200}} src={require("..//PlaceHolder.png")} alt={gameObj.g_tag}/>

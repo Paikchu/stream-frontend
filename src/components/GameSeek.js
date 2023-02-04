@@ -4,6 +4,7 @@ export default class GameSeek extends React.Component {
 
     componentDidMount() {
         let gamelist = [];
+        if(0)
         fetch("/home")
             .then((response)=>response.json())
             .then((val)=>{
@@ -19,7 +20,7 @@ export default class GameSeek extends React.Component {
         this.setState({games: gamelist})
     }
     render() {
-        console.log("Gema seeking...")
+        //console.log("Gema seeking...")
         return (
             <h1>Welecome to streamy</h1>
         )
