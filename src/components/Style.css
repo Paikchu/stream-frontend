@@ -1,10 +1,14 @@
+.global_header {
+    display: block;
+    background-color: #333;
+}
+
 ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: auto;
+    width: 1000px;
     overflow: hidden;
-    background-color: #333;
-    top: 0;
+    text-align: center;
 }
 
 li {
@@ -27,4 +31,10 @@ li a {
 /* Change the link color to #111 (black) on hover */
 li a:hover {
     background-color: #111;
+}
+
+.main-body {
+    display: block;
+    width: 1000px;
+    margin: auto;
 }

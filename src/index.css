@@ -1,7 +1,12 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    display: block;
+    font: 20px "Century Gothic", Futura, sans-serif;
     background-color: dimgray;
-    margin: 0;
+}
+
+.PageBody{
+    width: 1000px;
+    margin: auto;
 }
 
 ol, ul {
