@@ -38,3 +38,10 @@ li a:hover {
     width: 1000px;
     margin: auto;
 }
+
+.display-block {
+    float: left;
+    display: block;
+    width: 220px;
+    padding: 20px;
+}

@@ -13,6 +13,7 @@ class HomeBody extends React.Component{
     }
      async componentDidMount() {
         let gamelist = [];
+        if(0)
          fetch("/home")
              .then((response)=>response.json())
              .then((val)=>{
@@ -37,8 +38,7 @@ class HomeBody extends React.Component{
     }
     render(){
         //console.log(this.state.games)
-        console.log(this.state.dataloaded)
-        if(this.state.dataloaded){
+        //console.log(this.state.dataloaded)
             //console.log(this.state.games.result)
             return(
                 <React.StrictMode>
@@ -48,7 +48,6 @@ class HomeBody extends React.Component{
                     </div>
                 </React.StrictMode>
             );
-        }
     };
 }
 
