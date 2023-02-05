@@ -18,9 +18,19 @@ const router = createBrowserRouter([
     },
     {
         path: "/user-sign-in",
-        element: <SignIn/>,
+        element: <SignIn name="user" />,
         errorElement: <ErrorPage />,
     },
+    {
+        path: "/com-sign-in",
+        element: <SignIn name="com" />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/man-sign-in",
+        element: <SignIn name="man" />,
+        errorElement: <ErrorPage />,
+    }
 ]);
 
 

@@ -1,5 +1,4 @@
 import React from "react";
-
 class SignIn extends React.Component{
     constructor(props) {
         super(props);
@@ -9,24 +8,28 @@ class SignIn extends React.Component{
             account_s: 'login',
             code: ''
         }
+
     }
 
-    toJson(data){
-        return data.json;
+    getJSONPayload() {
+        if(this.props.name === "man")
+            return JSON.stringify({m_email: this.state.email, m_pwd: this.state.password})
+        else if(this.props.name === "com")
+            return JSON.stringify({com_email: this.state.email, com_pwd: this.state.password})
+        else
+            return JSON.stringify({u_email: this.state.email, u_pwd: this.state.password})
     }
 
 
     handleClick() {
         if(this.state.email != null && this.state.password != null){
-            console.log("success");
-            const httpUrl = ""
-            fetch(httpUrl + "/user-sign-in", {
+            fetch("/" + this.props.name + "-sign-in", {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({u_email: this.state.email, u_pwd: this.state.password})
+                body: this.getJSONPayload()
             }).then((response) => response.json())
                 .then((result) => {
                     console.log(result.message);
