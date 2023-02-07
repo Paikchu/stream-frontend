@@ -4,6 +4,7 @@ import HomeBody from './components/HomeBody';
 import ErrorPage from "./pages/Error";
 import SignIn from "./components/SignIn";
 import NavBarG from "./components/NavBarG";
+import SignUp from "./components/SignUp";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         path: "/man-sign-in",
         element: <SignIn name="man" />,
         errorElement: <ErrorPage />,
+    },
+    {
+        path: "/user-sign-up",
+        element: <SignUp name="user"/>,
+        errorElement: <ErrorPage/>
     }
 ]);
 
