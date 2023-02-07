@@ -1,32 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 
-class SignIn extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            account_s: 'login',
-            code: ''
-        }
+export default function SignIn(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    function getJSONPayload() {
+        if (props.name === "man")
+            return JSON.stringify({m_email: email, m_pwd: password})
+        else if (props.name === "com")
+            return JSON.stringify({com_email: email, com_pwd: password})
+        else
+            return JSON.stringify({u_email: email, u_pwd: password})
     }
 
-    toJson(data){
-        return data.json;
-    }
-
-
-    handleClick() {
-        if(this.state.email != null && this.state.password != null){
-            console.log("success");
-            const httpUrl = ""
-            fetch(httpUrl + "/user-sign-in", {
+    function handleClick() {
+        if (email != null && password != null) {
+            fetch("/" + props.name + "-sign-in", {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({u_email: this.state.email, u_pwd: this.state.password})
+                body: getJSONPayload()
             }).then((response) => response.json())
                 .then((result) => {
                     console.log(result.message);
@@ -35,36 +32,43 @@ class SignIn extends React.Component{
         }
     }
 
-    render(){
-        return(
+    return (
+        <div>
+            <h1>Sign In</h1>
             <div>
-                <h1>Sign In</h1>
                 <div>
-                    <div>
-                        <label>SIGN IN WITH EMAIL</label>
-                        <input
-                            type="text"
-                            value = {this.state.email}
-                            onChange={(e) => this.setState({email: e.target.value})}
-                        />
-                    </div>
-                    <div>
-                        <label>PASSWORD</label>
-                        <input
-                            type="password"
-                            value = {this.state.password}
-                            onChange={(e)=> this.setState({password: e.target.value})}
-                        />
-                    </div>
-                    <div>
-                        <button onClick={() => this.handleClick()}>
-                            {this.state.account_s}
-                        </button>
-                    </div>
+                    <label>SIGN IN WITH EMAIL</label>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (emailRegEx.test(e.target.value)) {
+                                setError('');
+                            } else {
+                                setError('Email is not valid');
+                            }
+                        }}
+                    />
+                    {error && <p style={{color: 'red'}}>{error}</p>}
+                </div>
+                <div>
+                    <label>PASSWORD</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <button onClick={() => handleClick()}>
+                        Login
+                    </button>
+                </div>
+                <div>
+                    <a href="/sign-up">New User?</a>
                 </div>
             </div>
-        );
-    };
+        </div>
+    );
 }
-
-export default SignIn;
