@@ -65,6 +65,9 @@ export default function SignIn(props) {
                         Login
                     </button>
                 </div>
+                <div>
+                    <a href="/sign-up">New User?</a>
+                </div>
             </div>
         </div>
     );

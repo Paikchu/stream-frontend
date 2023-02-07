@@ -114,6 +114,7 @@ export default function SignUp(props) {
                         Login
                     </button>
                 </div>
+
             </div>
         </div>
     );
