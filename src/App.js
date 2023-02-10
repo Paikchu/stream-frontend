@@ -5,6 +5,7 @@ import ErrorPage from "./pages/Error";
 import SignIn from "./components/SignIn";
 import NavBarG from "./components/NavBarG";
 import SignUp from "./components/SignUp";
+import Library from "./components/Library";
 
 const router = createBrowserRouter([
     {

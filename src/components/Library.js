@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 const Library = () => {
-    const [userIds, setUserIds] = useState([]);
+    const [gameIds, setGameIds] = useState([]);
     const [gamelist, setgamelist] = useState([]);
     const [commlist, setcommlist] = useState([]);
     useEffect(() => {
         fetch('/numofgames')
             .then(response => response.json())
-            .then(data => setUserIds(data));
+            .then(data => setGameIds(data));
     }, []);
     const handleJump = game_id => {
         const gid = game_id;
@@ -26,9 +26,9 @@ const Library = () => {
             <div style={{ width: '20%', height: '100%', overflow: 'auto' }}>
                 <div>
                     <div>
-                        {userIds.map(id => (
-                            <button key={id} onClick={() => handleJump(id._gid)}>
-                                game{id._gid}
+                        {gameIds.map(id => (
+                            <button key={id} onClick={() => handleJump(id.g_id)}>
+                                game{id.g_id}
                             </button>
                         ))}
                     </div>
@@ -50,10 +50,11 @@ const Library = () => {
                             {
                                 gamelist.map((games)=>{
                                     return (
-                                        <div key={games._gid}>
-                                            <p>id:{games._gid}</p>
-                                            <p>intro:{games._gintro}</p>
-                                            <p>name:{games._gname}</p>
+                                        <div key={games.g_id}>
+                                            <p>id:{games.g_id}</p>
+                                            <p>intro:{games.g_intro}</p>
+                                            <p>name:{games.g_name}</p>
+                                            <img src={require("..//game_images//game_"+games.g_id.toString()+".jpg")} style={{width: 200}}/>
                                         </div>
                                     )
                                 })
