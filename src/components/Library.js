@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 const Library = () => {
     const [gameIds, setGameIds] = useState([]);
     const [gamelist, setgamelist] = useState([]);
     const [commlist, setcommlist] = useState([]);
+    const[comment, setComment] = useState("");
     //const [searchValue, setSearchValue] = useState([]);
     useEffect(() => {
         fetch('/numofgames')
@@ -21,53 +24,115 @@ const Library = () => {
             .then(data => setcommlist(data))
             .catch((error) => console.log("error"));
     };
+    const SubmitComm = comment => {
+        fetch('/add_comm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(comment)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Comment successfully posted:', data);
+            })
+            .catch(error => {
+                console.error('Error posting comment:', error);
+            });
+    }
     return (
         <div id="container" style={{ width: '100%' }}>
-            <div id="header" style={{ backgroundColor: "#EEEEEE" }}>
+            <div id="header" style={{ backgroundColor: "gray",height:"100px"}}>
                 <h1 style={{ marginBottom: 0 }}><center>search box</center></h1>
             </div>
-            <div id="menu" style={{ backgroundColor: "#EEEEEE", height: "350px", width: "50%", float: "left" }}>
+            <div id="menu" style={{ backgroundColor: "gray", height: "500px", width: "30%", float:"left" }}>
                 {gameIds.map(id => (
-                    <ul>
+                    <table>
                         <button key={id} onClick={() => handleJump(id.g_id)}>
-                            game{id._gid}
+                            {id.g_name}{id._gid}
                         </button>
-                    </ul>
+                    </table>
                 ))}
             </div>
-            <div id="content" style={{ backgroundColor: "#EEEEEE", height: "350px", width: "50%", float: "left" }}>
-                <center>
-                    <ul>
+            <div id="content" style={{ backgroundColor: "gray", height: "500px", width: "35%", float: "left" }}>
+                <div id="demo" className="carousel slide" data-bs-ride="carousel">
+                    <div className="carousel-indicators">
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" className="active"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                    </div>
+                    <div className="carousel-inner">
+                        <div className="carousel-item active">
+                            <img src={require("../game_images/game_1.jpg")} width = "400px" height = "400px" alt="Los Angeles" className="d-block w-100"></img>
+                        </div>
+                        <div className="carousel-item">
+                            <img src={require("../game_images/game_2.jpg")} width = "400px" height = "400px" alt="Chicago" className="d-block w-100"></img>
+                        </div>
+                        <div className="carousel-item">
+                            <img src={require("../game_images/game_2.jpg")} width = "400px" height = "400px" alt="Chicago" className="d-block w-100"></img>
+                        </div>
+                    </div>
+                    <button className="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon"></span>
+                    </button>
+                    <button className="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                        <span className="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+            <div id="content" style={{ backgroundColor: "gray", height: "500px", width: "35%", float: "left" }}>
                         {
                             gamelist.map((games)=>{
                                 return (
-                                    <div key={games.g_id}>
-                                        <p>id:{games.g_id}</p>
-                                        <p>intro:{games.g_intro}</p>
-                                        <p>name:{games.g_name}</p>
+                                    <div id = "gameinfo" key={games.g_id}>
+                                        <center><h3>{games.g_name}</h3></center>
+                                        <p>{games.g_intro}</p>
                                     </div>
                                 )
                             })
                         }
-                    </ul>
-                    <ul>
-                        {
-                            commlist.map((comments)=>{
-                                return (
-                                    <div key={comments.g_id}>
-                                        <p>user id:{comments.u_id}</p>
-                                        <p>game id:{comments.g_id}</p>
-                                        <p>comment:{comments.comm_content}</p><p>rate:{comments._rate}</p>
-                                    </div>
-                                )
-                            })
-                        }
-                    </ul>
-                </center>
+
             </div>
+            <div id="container" style={{ width: '30%' }}>
+            </div>
+            <div id="container" style={{ width: '40%' }}>
+                {
+                    commlist.map((comments)=> {
+                        return (
+                            <div key={comments.comm_id}>
+                                <center>
+                                    <table className="table">
+                                        <tbody>
+                                        <tr>
+                                            <td rowSpan="2">user image</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowSpan="1">{comments._comm}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>time</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </div>
+                        )
+                    })
+                }
+                <input
+                    type="text"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                />
+                <button onClick={() => SubmitComm()}>
+                    Submit
+                </button>
 
+            </div>
+            <div id="container" style={{ width: '30%' }}>
+            </div>
         </div>
-
     );
 }
 
