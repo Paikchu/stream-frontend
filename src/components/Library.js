@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { createElement,useState,useEffect } from 'react';
+import { Button, Descriptions, Radio } from 'antd';
+import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
+import { Avatar,Tooltip } from 'antd';
+import { Comment } from '@ant-design/compatible';
+import { Input, Space } from 'antd';
+
 
 
 
@@ -6,8 +12,64 @@ const Library = () => {
     const [gameIds, setGameIds] = useState([]);
     const [gamelist, setgamelist] = useState([]);
     const [commlist, setcommlist] = useState([]);
-    const[comment, setComment] = useState("");
-    //const [searchValue, setSearchValue] = useState([]);
+    const [likes, setLikes] = useState(0);
+    const [dislikes, setDislikes] = useState(0);
+    const [action, setAction] = useState("");
+    const [newcomment, set_newcomment] = useState('');
+    const [searchValue, setSearchValue] = useState("");
+    const [searchbox, setSearchbox] = useState("none");
+    const [lunbotu, setlunbotu] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+
+    const data = [
+        'Racing car sprays burning fuel into crowd.',
+        'Japanese princess to wed commoner.',
+        'Australian walks 100km after outback crash.',
+        'Man charged over missing wedding girl.',
+        'Los Angeles battles huge wildfires.',
+    ];
+
+    const show_lunbotu = () => {
+        setlunbotu("");
+    };
+    const hide_lunbotu = () => {
+        setlunbotu("none");
+    };
+
+    const show_searchbox = () => {
+        setSearchbox("");
+    };
+    const hide_searchbox = () => {
+        setSearchbox("none");
+    };
+
+    const like = () => {
+        setLikes(1);
+        setDislikes(0);
+        setAction('liked');
+    };
+
+    const dislike = () => {
+        setLikes(0);
+        setDislikes(1);
+        setAction('disliked');
+    };
+
+    const actions = [
+        <Tooltip key="comment-basic-like" title="Like">
+      <span onClick={like}>
+        {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+          <span className="comment-action">{likes}</span>
+      </span>
+        </Tooltip>,
+        <Tooltip key="comment-basic-dislike" title="Dislike">
+      <span onClick={dislike}>
+        {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
+          <span className="comment-action">{dislikes}</span>
+      </span>
+        </Tooltip>,
+    ];
+
     useEffect(() => {
         fetch('/numofgames')
             .then(response => response.json())
@@ -23,7 +85,27 @@ const Library = () => {
             .then((response) => response.json())
             .then(data => setcommlist(data))
             .catch((error) => console.log("error"));
+        hide_searchbox();
+        show_lunbotu();
     };
+
+    const handleSearch = () => {
+        fetch('/search_game', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ gamename: searchValue })
+        })
+            .then(response => response.json())
+            .then(data => setSearchResults(data))
+            .catch(error => console.log(error));
+        hide_lunbotu();
+        show_searchbox();
+    };
+
+
+
     const SubmitComm = comment => {
         fetch('/add_comm', {
             method: 'POST',
@@ -41,20 +123,43 @@ const Library = () => {
             });
     }
     return (
-        <div id="container" style={{ width: '100%' }}>
-            <div id="header" style={{ backgroundColor: "gray",height:"100px"}}>
-                <h1 style={{ marginBottom: 0 }}><center>search box</center></h1>
-            </div>
-            <div id="menu" style={{ backgroundColor: "gray", height: "500px", width: "30%", float:"left" }}>
+        <div id="container" style={{ width: '100%'}}>
+            <center><div id="content" style={{height:"100px",width:"400px",position:"cenetr"}}>
+                <div>
+                    <Input.Search
+                        placeholder="input search text"
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onSearch={handleSearch}
+                        value={searchValue}
+                        onChange={e => setSearchValue(e.target.value)}
+                    />
+                </div>
+                <div id="content" style={{height:"300px",width:"400px",position:"cenetr",border:"1px solid #ddd",display:searchbox}}>
+                    {
+                        searchResults.map((searchResult) => {
+                            return (
+                                <ul>
+                                    <li> <b><Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{border:"none",color:"black"}}>
+                                        {searchResult.g_name}
+                                    </Button></b></li>
+                                </ul>
+                            )
+                        })
+                    }
+                </div>
+            </div></center>
+            <div id="menu" style={{height: "480px", width: "20%", float:"left"}}>
                 {gameIds.map(id => (
                     <table>
-                        <button key={id} onClick={() => handleJump(id.g_id)}>
+                        <Button type = "link" key={id} onClick={() => handleJump(id.g_id)}  style={{border:"none",color:"black"}}>
                             {id.g_name}{id._gid}
-                        </button>
+                        </Button>
                     </table>
                 ))}
             </div>
-            <div id="content" style={{ backgroundColor: "gray", height: "500px", width: "35%", float: "left" }}>
+            <div id="content" style={{height: "500px", width: "40%", float: "left",display:lunbotu}}>
                 <div id="demo" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-indicators">
                         <button type="button" data-bs-target="#demo" data-bs-slide-to="0" className="active"></button>
@@ -80,57 +185,67 @@ const Library = () => {
                     </button>
                 </div>
             </div>
-            <div id="content" style={{ backgroundColor: "gray", height: "500px", width: "35%", float: "left" }}>
+            <div id="content" style={{height: "500px", width: "5%", float: "left"}}>
+            </div>
+            <div id="content" style={{height: "500px", width: "35%", float: "right"}}>
                         {
                             gamelist.map((games)=>{
                                 return (
-                                    <div id = "gameinfo" key={games.g_id}>
+                                    <div>
                                         <center><h3>{games.g_name}</h3></center>
-                                        <p>{games.g_intro}</p>
+                    <p>Release Date:{games.g_rlsdate}</p>
+                    <p>Publisher:{games.g_compid}</p>
+                    <p>Tag:{games.g_tag}</p>
+                   <text>Introduction:{games.g_intro}</text>
                                     </div>
-                                )
-                            })
-                        }
-
-            </div>
-            <div id="container" style={{ width: '30%' }}>
-            </div>
-            <div id="container" style={{ width: '40%' }}>
-                {
-                    commlist.map((comments)=> {
-                        return (
-                            <div key={comments.comm_id}>
-                                <center>
-                                    <table className="table">
-                                        <tbody>
-                                        <tr>
-                                            <td rowSpan="2">user image</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td rowSpan="1">{comments._comm}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>time</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </center>
-                            </div>
-                        )
-                    })
+                )
+                })
                 }
-                <input
-                    type="text"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <button onClick={() => SubmitComm()}>
-                    Submit
-                </button>
-
             </div>
-            <div id="container" style={{ width: '30%' }}>
+            <div id="container" style={{ width: '100%'}}>
+                <div id="content" style={{ width: "10%", float: "left"}}>
+                </div>
+                <div id="content" style={{ top: "50px", width: "45%", float: "left"}}>
+                    <Descriptions
+                        bordered
+                        size="small"
+                    >
+                        <Descriptions.Item label="Operating System">64-bit Windows 10</Descriptions.Item>
+                        <Descriptions.Item label="Processor">Ryzen 5 CPU or Equivalent</Descriptions.Item>
+                        <Descriptions.Item label="RAM">8 GB</Descriptions.Item>
+                        <Descriptions.Item label="Memory">56G</Descriptions.Item>
+                        <Descriptions.Item label="Network Requirement">Internet linked</Descriptions.Item>
+                        <Descriptions.Item label="Graphic Card"> AMD Radeon™ R9 290, NVIDIA GeForce® GTX 970</Descriptions.Item>
+                        <Descriptions.Item label="Extra Requirements">
+                            ~3.8GB for 1 localized language
+                        </Descriptions.Item>
+                    </Descriptions>
+                </div>
+                <div id="content" style={{ width: "10%", float: "left"}}>
+                </div>
+                <div id="content" style={{ width: "35%", float: "right",border:"3px solid #ddd"}}>
+                    {
+                        commlist.map((comments)=> {
+                            return (
+                                <Comment
+                                    actions={actions}
+                                    author={<a>user{comments.u_id}</a>}
+                                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo"/>}
+                                    content={
+                                        <p>
+                                            {comments._comm}
+                                        </p>
+                                    }
+                                    datetime={
+                                        <Tooltip title="2023-2-15 11:33:33">
+                                            <span>1 hours ago</span>
+                                        </Tooltip>
+                                    }
+                                />
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     );
