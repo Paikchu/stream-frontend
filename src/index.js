@@ -4,15 +4,21 @@ import './index.css';
 import App from './App'
 import {Provider} from "react-redux";
 import store from './store.js'
+import Library from './components/Library.js'
+import './css/library.css';
+import './/Bootstrap/css/bootstrap.min.css';
+import './/Bootstrap/js/bootstrap.bundle.min.js';
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css" />
 
 
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <React.StrictMode>
+    /*<React.StrictMode>
         <Provider store={store}>
-            <App />
+            <Library />
         </Provider>
-    </React.StrictMode>
+    </React.StrictMode>*/
+    <Library />
 );

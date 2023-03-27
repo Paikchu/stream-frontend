@@ -4,3 +4,176 @@
 #gameinfo{
 "text-align":center
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.sidebar {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 50px;
+}
+
+
+
+
+.carousel {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-item img {
+    object-fit: contain;
+    max-height: 400px;
+}
+
+
+.game-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.table {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.comments {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.pagination li {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+.pagination {
+    font-size: 14px;
+}
+
+.pagination a {
+    font-size: 14px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.comment-form input,
+.comment-form select,
+.comment-form textarea {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.comment-form input:focus,
+.comment-form select:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #0077ff;
+}
+
+.comment-submit {
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #0077ff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-submit:hover {
+    background-color: #005dff;
+}
+
+.game-card {
+    max-width: 600px; /* set your desired width */
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+
+.game-card h3 {
+    margin-top: 0;
+}
+
+.game-card p {
+    margin-bottom: 10px;
+}
+
+.game-card .intro {
+    font-size: 14px;
+}
+
+.link-button {
+    background-color: transparent;
+    border: none;
+    color: #1890ff;
+    text-decoration: underline;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.link-button:hover {
+    color: #40a9ff;
+}
