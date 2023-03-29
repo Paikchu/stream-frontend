@@ -5,13 +5,11 @@ import App from './App'
 import {Provider} from "react-redux";
 import store from './store.js'
 import Library from './components/Library.js'
+import Order from './components/Order.js'
 import './css/library.css';
+import './css/GameOrderList.css';
 import './/Bootstrap/css/bootstrap.min.css';
-import './/Bootstrap/js/bootstrap.bundle.min.js';
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css" />
-
-
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,5 +18,5 @@ root.render(
             <Library />
         </Provider>
     </React.StrictMode>*/
-    <Library />
+    <Order />
 );
