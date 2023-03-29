@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn";
 import NavBarG from "./components/NavBarG";
 import SignUp from "./components/SignUp";
 import Library from "./components/Library";
+import Order from "./components/Library";
 
 const router = createBrowserRouter([
     {

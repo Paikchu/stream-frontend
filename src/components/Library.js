@@ -1,7 +1,7 @@
 import React, { createElement,useState,useEffect,useMemo } from 'react';
 import { Button, Descriptions, Radio } from 'antd';
 import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
-import { Avatar,Tooltip } from 'antd';
+import { Avatar,Tooltip,Card } from 'antd';
 import { Comment } from '@ant-design/compatible';
 import ReactPaginate from 'react-paginate';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // import the styles
@@ -12,66 +12,139 @@ const ITEMS_PER_PAGE = 5;
 const Library = () => {
     const [user_id, setUserId] = useState(2);
     const [gameIds, setGameIds] = useState([]);
-    const [gamelist, setgamelist] = useState([]);
+    const [gamelist, setgamelist] = useState([{
+        "g_id": 2,
+        "g_name": "FINAL FANTASY VII",
+        "g_intro": "Cloud Strife, an ex-SOLDIER operative, descends on the mako-powered city of Midgar. The world of the timeless classic FINAL FANTASY VII is reborn, using cutting-edge graphics technology, a new battle system and an additional adventure featuring Yuffie Kisaragi.",
+        "g_release_date": "2022-06-17T04:00:00.000+00:00",
+        "g_price": 59.99,
+        "g_tag": "ARPG",
+        "g_cid": 1
+    }]);
     const [commlist, setcommlist] = useState([]);
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
     const [action, setAction] = useState("");
     const [searchValue, setSearchValue] = useState("");
     const [searchbox, setSearchbox] = useState("none");
-    const [lunbotu, setlunbotu] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [currentGameId, setGameId] = useState(1);
+    const [comment, setComment] = useState({
+        com_gid: currentGameId,
+        com_content:"",
+    });
+
+    const [submitted, setSubmitted] = useState(false);
 
     const { Search } = Input;
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [previewGame, setPreviewGame] = useState(null);
-
-    const handlePreview = (game) => {
-        setPreviewGame(game);
-        setModalVisible(true);
+    const show_searchbox = () =>{
+        setSearchbox(true);
     }
 
-        const [comment, setComment] = useState({
-            g_id: '',
-            u_id: '',
-            comm_rate: '',
-            comm_content: ''
-        });
-
-        const [submitted, setSubmitted] = useState(false);
-
-        const handleChange = event => {
-            setComment({ ...comment, [event.target.name]: event.target.value });
-        };
-
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            SubmitComm(comment);
-            setSubmitted(true);
-            setComment({
-            g_id: "",
-            u_id: "",
-            comm_rate: "",
-            comm_content: "",
-        });
-        };
+    const hide_searchbox = () =>{
+        setSearchbox(false);
+    }
 
 
-    const show_lunbotu = () => {
-        setlunbotu("");
-    };
-    const hide_lunbotu = () => {
-        setlunbotu("none");
+
+    const handleChange = event => {
+        // setComment({ ...comment, [event.target.name]: event.target.value });
+        setComment({com_content: event.target.value})
     };
 
-    const show_searchbox = () => {
-        setSearchbox("");
+    const handleSearch = () => {
+        fetch('/search_game', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ gamename: searchValue })
+        })
+            .then(response => response.json())
+            .then(data => setSearchResults(data))
+            .catch(error => console.log(error));
+        show_searchbox();
     };
-    const hide_searchbox = () => {
-        setSearchbox("none");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // const newComment = {
+        //     com_gid: currentGameId.toString(),
+        //     com_content: comment.com_content
+        // };
+        setComment({com_gid: currentGameId, com_content: comment.com_content})
+        fetch('/add_comm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"com_gid":currentGameId,"com_content":comment.com_content})
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.code === 200){
+                    // Add new comment to front end before making async request
+                    setcommlist([comment, ...commlist]);
+                    setComment({com_gid:currentGameId, com_content: ""});
+
+                }
+                else{
+                    alert(data.message)
+                }
+            })
+            .catch(error => {
+                console.error('Error posting comment:', error);
+            });
+        // SubmitComm(newComment)
+        //     .then(data => {
+        //         console.log('Comment successfully posted:', data);
+        //         // Replace added comment with response data
+        //         setcommlist(commlist.map(item => {
+        //             if (item === newComment) {
+        //                 return data;
+        //             }
+        //             return item;
+        //         }));
+        //     })
+        //     .catch(error => {
+        //         console.error('Error posting comment:', error);
+        //         // Remove added comment if there is an error
+        //         setcommlist(commlist.filter(item => item !== newComment));
+        //     });
+        // setSubmitted(true);
+        // setComment({
+        //     com_gid: currentGameId.toString(),
+        //     comm_content: "",
+        // });
     };
+
+    // const SubmitComm = comment => {
+    //     if (!comment.comm_content) {
+    //         console.log('Comment content is empty.');
+    //         return;
+    //     }
+    //
+    //     fetch('/add_comm', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({"com_gid":currentGameId,"com_content":comment.comm_content})
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log('Comment successfully posted:', data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error posting comment:', error);
+    //         });
+    //     fetch('/getAllComm')
+    //         .then((response) => response.json())
+    //         .then(data => setcommlist(data))
+    //         .catch((error) => console.log("error"));
+    // }
 
     const like = () => {
         setLikes(1);
@@ -117,56 +190,22 @@ const Library = () => {
 
     const handleJump = game_id => {
         const gid = game_id;
+        setGameId(gid);
         fetch('/game_show/' + gid.toString())
             .then((response) => response.json())
             .then(data => setgamelist(data))
             .catch((error) => console.log("error"));
-        fetch('/getAllComm')
+        fetch('/comm_show/'+currentGameId.toString())
             .then((response) => response.json())
             .then(data => setcommlist(data))
             .catch((error) => console.log("error"));
-        hide_searchbox();
-        show_lunbotu();
     };
-
-    const handleSearch = () => {
-        fetch('/search_game', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ gamename: searchValue })
-        })
-            .then(response => response.json())
-            .then(data => setSearchResults(data))
-            .catch(error => console.log(error));
-        hide_lunbotu();
-        show_searchbox();
-    };
-
-    const SubmitComm = comment => {
-        fetch('/add_comm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Comment successfully posted:', data);
-            })
-            .catch(error => {
-                console.error('Error posting comment:', error);
-            });
-    }
-
     return (
         <div className="container">
             <div className="sidebar">
                 {displayedIds.map(id => (
                     <table key={id.g_id}>
-                        <Button type="link" onClick={() => handleJump(id.g_id)} className="link-button">
+                        <Button type="link" style = {{textDecoration: "underline"}} onClick={() => handleJump(id.g_id)} className="link-button">
                             {id.g_name}{id._gid}
                         </Button>
                     </table>
@@ -194,54 +233,22 @@ const Library = () => {
                         onChange={e => setSearchValue(e.target.value)}
                     />
                 </div>
-                <div id="content" style={{position: "absolute", top: "100%", height: "300px", width: "400px", border: "1px solid #ddd", display: searchbox}}>
-                    {
-                        searchResults.map((searchResult) => {
-                            return (
-                                <ul>
-                                    <li>
-                                        <b>
-                                            <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{border:"none",color:"black"}}>
-                                                {searchResult.g_name}
-                                            </Button>
-                                        </b>
-                                    </li>
-                                </ul>
-                            )
-                        })
-                    }
-                </div>
-                <Modal
-                    visible={modalVisible}
-                    onCancel={() => setModalVisible(false)}
-                    footer={null}
-                >
-                    {previewGame && (
-                        <div>
-                            <h2>{previewGame.g_name}</h2>
-                            <img src={previewGame.g_image} alt={previewGame.g_name} />
-                            <p>{previewGame.g_description}</p>
-                        </div>
-                    )}
-                </Modal>
             </div>
-            <div className="carousel">
-                <div id="demo" className="carousel slide" data-bs-ride="carousel">
-                    <Carousel style={{width: "400px", height: "400px"}}>
-                        <Carousel style={{ width: "200px", height: "auto" }}>
-                            <Carousel.Item>
-                                <img className="d-block w-100" src={require("../game_images/game_1.jpg")} alt="First slide" />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img className="d-block w-100" src={require("../game_images/game_2.jpg")} alt="Second slide" />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img className="d-block w-100" src={require("../game_images/game_2.jpg")} alt="Third slide" />
-                            </Carousel.Item>
-                        </Carousel>
-
-                    </Carousel>
-                </div>
+            <div id="content" style={{display: 'flex', flexDirection: 'column' }}>
+                {searchResults.map(searchResult => {
+                    return (
+                    <ul>
+                    <li>
+                    <b>
+                    <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{ border: "none", color: "black", textDecoration: "underline" }} className="link-button">
+                {searchResult.g_name}
+                    </Button>
+                    </b>
+                    </li>
+                    </ul>
+                    )
+                })
+                }
             </div>
             <div className="game-list">
                 {
@@ -257,6 +264,24 @@ const Library = () => {
                         )
                     })
                 }
+            </div>
+            <div className="carousel">
+                <div id="demo" className="carousel slide" data-bs-ride="carousel">
+                    <Carousel style={{width: "200px", height: "400px"}}>
+                        <Carousel style={{ width: "200px", height: "auto" }}>
+                            <Carousel.Item>
+                                <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_1.jpg")} alt="First slide" />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_2.jpg")} alt="Second slide" />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_2.jpg")} alt="Third slide" />
+                            </Carousel.Item>
+                        </Carousel>
+
+                    </Carousel>
+                </div>
             </div>
             <div className="table">
                 <table style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", color: "#333", fontFamily: "Arial, sans-serif" }}>
@@ -298,48 +323,33 @@ const Library = () => {
                         return (
                             <Comment
                                 actions={actions}
-                                author={<a>user{comments.u_id}</a>}
+                                author={<a>comment{user_id}</a>}
                                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo"/>}
                                 content={
                                     <p>
-                                        {comments._comm}
+                                        {comments.com_content}
                                     </p>
                                 }
                                 datetime={
                                     <Tooltip title="2023-2-15 11:33:33">
-                                        <span>1 hours ago</span>
+                                        <span>{comments.com_data}</span>
                                     </Tooltip>
                                 }
                             />
                         )
                     })
                 }
+            </div>
+            <div className="submit">
                 {!submitted ? (
                     <form onSubmit={handleSubmit} className="comment-form">
                         <center>
                             <label>
-                                Rating:
-                                <select
-                                    name="comm_rate"
-                                    value={comment.comm_rate}
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Select rating</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </label>
-                            <br />
-                            <label>
-                                Comment:
                                 <textarea
-                                    name="comm_content"
-                                    value={comment.comm_content}
+                                    name="com_content"
+                                    value={comment.com_content}
                                     onChange={handleChange}
-                                    style={{ width: '400px', height: '200px' }}
+                                    style={{ width: '600px', height: '100px' }}
                                 />
 
                             </label>
@@ -357,6 +367,4 @@ const Library = () => {
 
     );
 }
-
-
 export default Library;
