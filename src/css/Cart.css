@@ -1,9 +1,9 @@
-.game-order-list {
+.cart-list {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: auto;
+    height: 50vh;
 }
 
 .search-container {
@@ -37,3 +37,10 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
+
+.cart-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
