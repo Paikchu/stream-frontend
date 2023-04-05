@@ -19,7 +19,16 @@ const Library = () => {
         "g_release_date": "2022-06-17T04:00:00.000+00:00",
         "g_price": 59.99,
         "g_tag": "ARPG",
-        "g_cid": 1
+        "g_cid": 1,
+        "c_name":"Rockstar Games",
+        "game_id":1,
+        "g_OS":"Windows 10 64 Bit",
+        "g_Processor":" Intel Core 2 Quad CPU Q6600 @ 2.40GHz (4 CPUs)",
+        "g_RAM":"8GB",
+        "g_Memory":"72GB",
+        "g_Network":"100% DirectX 10 compatible",
+        "g_GraphicCard":"NVIDIA GTX 660 2GB / AMD HD7870 2GB",
+        "g_ExtraRequire":""
     }]);
     const [commlist, setcommlist] = useState([]);
     const [likes, setLikes] = useState(0);
@@ -257,7 +266,7 @@ const Library = () => {
                             <div className="game-card">
                                 <center><h3>{games.g_name}</h3></center>
                                 <p><strong>Release Date:</strong> {games.g_release_date}</p>
-                                <p><strong>Publisher:</strong> {games.g_cid}</p>
+                                <p><strong>Publisher:</strong> {games.c_name}</p>
                                 <p><strong>Tag:</strong> {games.g_tag}</p>
                                 <p className="intro"><strong>Introduction:</strong> {games.g_intro}</p>
                             </div>
@@ -276,7 +285,7 @@ const Library = () => {
                                 <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_2.jpg")} alt="Second slide" />
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_2.jpg")} alt="Third slide" />
+                                <img className="d-block w-100" src={require("../game_images/"+currentGameId.toString()+"/game_3.jpg")} alt="Third slide" />
                             </Carousel.Item>
                         </Carousel>
 
@@ -284,38 +293,44 @@ const Library = () => {
                 </div>
             </div>
             <div className="table">
-                <table style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", color: "#333", fontFamily: "Arial, sans-serif" }}>
+                {
+                gamelist.map((games) => {
+                    return (
+                <table key={games.g_id} style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", color: "#333", fontFamily: "Arial, sans-serif" }}>
                     <tbody>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>Operating System</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>64-bit Windows 10</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_OS}</td>
                     </tr>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>Processor</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>Ryzen 5 CPU or Equivalent</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Processor}</td>
                     </tr>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>RAM</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>8 GB</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_RAM}</td>
                     </tr>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>Memory</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>56G</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Memory}</td>
                     </tr>
                     <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Network Requirement</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>Internet linked</td>
+                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Video Requirement</th>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Network}</td>
                     </tr>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>Graphic Card</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>AMD Radeon™ R9 290, NVIDIA GeForce® GTX 970</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_GraphicCard}</td>
                     </tr>
                     <tr>
                         <th style={{ border: "1px solid #ccc", padding: "10px" }}>Extra Requirements</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>~3.8GB for 1 localized language</td>
+                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_ExtraRequire}</td>
                     </tr>
                     </tbody>
                 </table>
+                )
+                })
+                }
             </div>
             <div className="comments">
                 {

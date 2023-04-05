@@ -11,7 +11,6 @@ import './css/library.css';
 import './css/GameOrderList.css';
 import './css/Cart.css';
 import './/Bootstrap/css/bootstrap.min.css';
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css" />
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,5 +19,5 @@ root.render(
             <Library />
         </Provider>
     </React.StrictMode>*/
-    <Cart />
+    <Library />
 );
