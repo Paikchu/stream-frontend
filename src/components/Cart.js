@@ -57,7 +57,8 @@ const CartList = () => {
                     <th>Game Name</th>
                     <th>Money</th>
                     <th>Game Tag</th>
-                    <th>Publisher</th>
+                    <th>Delete</th>
+                    <th>Purchase</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,7 +68,6 @@ const CartList = () => {
                         <td>{cart.g_name}</td>
                         <td>{cart.g_price}</td>
                         <td>{cart.g_tag}</td>
-                        <td>{cart.g_cid}</td>
                         <td>
                             <button type="link" onClick={() => handleDeleteCart(cart.cart_gid)} className="link-button">Delete</button>
                         </td>

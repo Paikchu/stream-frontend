@@ -38,9 +38,10 @@ const GameOrderList = () => {
                     <tr key={order.oid}>
                         <td>{order.oid}</td>
                         <td>{order.o_gid}</td>
-                        <td>{order.o_uid}</td>
+                        <td>{order.g_name}</td>
                         <td>{order.o_value}</td>
                         <td>{order.o_time}</td>
+                        <td>Delete</td>
                         <td>
                             <button type="link" onClick={() => handleDeleteOrder(order.oid)} className="link-button">Delete</button>
                         </td>

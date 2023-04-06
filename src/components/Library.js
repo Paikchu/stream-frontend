@@ -53,7 +53,7 @@ const Library = () => {
     }
 
     const hide_searchbox = () =>{
-        setSearchbox(false);
+        setSearchbox("none");
     }
 
 
@@ -208,6 +208,7 @@ const Library = () => {
             .then((response) => response.json())
             .then(data => setcommlist(data))
             .catch((error) => console.log("error"));
+        hide_searchbox();
     };
     return (
         <div className="container">
@@ -243,18 +244,18 @@ const Library = () => {
                     />
                 </div>
             </div>
-            <div id="content" style={{display: 'flex', flexDirection: 'column' }}>
+            <div id="content" style={{display: searchbox, flexDirection: 'column' }}>
                 {searchResults.map(searchResult => {
                     return (
-                    <ul>
-                    <li>
-                    <b>
-                    <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{ border: "none", color: "black", textDecoration: "underline" }} className="link-button">
-                {searchResult.g_name}
-                    </Button>
-                    </b>
-                    </li>
-                    </ul>
+                        <ul>
+                            <li>
+                                <b>
+                                    <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{ border: "none", color: "black", textDecoration: "underline" }} className="link-button">
+                                        {searchResult.g_name}
+                                    </Button>
+                                </b>
+                            </li>
+                        </ul>
                     )
                 })
                 }
@@ -294,42 +295,42 @@ const Library = () => {
             </div>
             <div className="table">
                 {
-                gamelist.map((games) => {
-                    return (
-                <table key={games.g_id} style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", color: "#333", fontFamily: "Arial, sans-serif" }}>
-                    <tbody>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Operating System</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_OS}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Processor</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Processor}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>RAM</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_RAM}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Memory</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Memory}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Video Requirement</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_Network}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Graphic Card</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_GraphicCard}</td>
-                    </tr>
-                    <tr>
-                        <th style={{ border: "1px solid #ccc", padding: "10px" }}>Extra Requirements</th>
-                        <td style={{ border: "1px solid #ccc", padding: "10px" }}>{games.g_ExtraRequire}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                )
-                })
+                    gamelist.map((games) => {
+                        return (
+                            <table key={games.g_id} style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", color: "#333", fontFamily: "Arial, sans-serif" }}>
+                                <tbody>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Operating System</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_OS}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Processor</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_Processor}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>RAM</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_RAM}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Memory</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_Memory}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Video Requirement</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_Network}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Graphic Card</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_GraphicCard}</td>
+                                </tr>
+                                <tr>
+                                    <th style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>Extra Requirements</th>
+                                    <td style={{ border: "1px solid #ccc", padding: "10px", color: "white" }}>{games.g_ExtraRequire}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        )
+                    })
                 }
             </div>
             <div className="comments">
@@ -339,7 +340,7 @@ const Library = () => {
                             <Comment
                                 actions={actions}
                                 author={<a>comment{user_id}</a>}
-                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo"/>}
+                                avatar={<Avatar src={require("../game_images/"+currentGameId.toString()+"/game_1.jpg")} alt="Han Solo"/>}
                                 content={
                                     <p>
                                         {comments.com_content}
@@ -350,6 +351,7 @@ const Library = () => {
                                         <span>{comments.com_data}</span>
                                     </Tooltip>
                                 }
+                                style={{ width: '115%' }}
                             />
                         )
                     })

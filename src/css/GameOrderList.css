@@ -4,6 +4,9 @@
     align-items: center;
     justify-content: center;
     height: auto;
+    position:fixed;
+    top:100px;
+    margin-left:400px
 }
 
 .search-container {
