@@ -1,10 +1,13 @@
 import React, {useState} from "react";
+import { useDispatch } from "react-redux";
+import { Login } from "../actions/userAction";
 
 export default function SignIn(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const dispatch = useDispatch();
 
     function getJSONPayload() {
         if (props.name === "man")
@@ -27,6 +30,9 @@ export default function SignIn(props) {
             }).then((response) => response.json())
                 .then((result) => {
                     console.log(result.message);
+                    dispatch(Login(email));
+                    console.log(email);
+                    window.location = "/home";
                 })
                 .catch((error) => console.log("error"));
         }

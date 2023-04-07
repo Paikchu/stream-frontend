@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import "./Style.css"
+import { useDispatch } from "react-redux";
+import { setProducts } from "../actions/productAction";
 
 const GameBlock = () => {
     const [data, setData] = useState(null);
-
+    const dispatch = useDispatch();
     const fetchData = () => {
         fetch('home')
             .then(response => response.json())
@@ -30,7 +32,7 @@ const GameBlock = () => {
                             <a rel="noreferrer" href="https://store.steampowered.com/" target="_blank">
                                 <img src={require("..//game_images/"+item.g_id+"/game_1.jpg")} style={{height: 150, width: 150}}/>
                                 <p key={item.g_id}>{item.g_name}</p>
-                                <a>{item.g_price}</a>
+                                <a>{item.g_price > 0 ? item.g_price : "Free"}</a>
                             </a>
                         </div>
                     ))}

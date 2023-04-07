@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { Login } from "../actions/userAction"
+import {useDispatch} from "react-redux";
 
 export default function SignUp(props) {
     const [name, setName] = useState("");
@@ -10,6 +12,7 @@ export default function SignUp(props) {
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const dispatch = useDispatch();
 
     function getJSONPayload() {
         if (props.name === "man")

@@ -1,55 +1,28 @@
 import React from "react";
-import "./Style.css"
+import "./Style.css";
 import GameBlock from "./GameBlock";
-import GameSeek from "./GameSeek";
+import { useSelector } from "react-redux";
 
-class HomeBody extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            games: [],
-            dataloaded: false
-        }
-    }
-     async componentDidMount() {
-        let gamelist = [];
-        if(0)
-         fetch("/home")
-             .then((response)=>response.json())
-             .then((val)=>{
-                 //console.log(typeof val)
-                 val.map((Obj)=>{
-                     //console.log(Obj);
-                     gamelist.push(Obj)
-                     return (
-                         <div>{Obj.g_name}</div>
-                     )
-                 })
-             });
-         this.setState({dataloaded: true, games: gamelist})
-    }
+const HomeBody = () => {
+    const userEmail = useSelector((state) => state.user.email);
 
-    componentWillUnmount() {
-        this.setState({dataloaded: false})
-    }
-
-    saveGame = (games) => {
-        this.setState({games: games})
-    }
-    render(){
-        //console.log(this.state.games)
-        //console.log(this.state.dataloaded)
-            //console.log(this.state.games.result)
-            return(
-                <React.StrictMode>
-                    <div>This is the homepage</div>
+    return (
+        <React.StrictMode>
+            <div>
+                <main>
+                    <h1>This is the homepage</h1>
+                    {userEmail && <p>You are signed in as: {userEmail}</p>}
                     <div className="main-body">
-                        <GameSeek saveGame={this.saveGame}/>
-                        <GameBlock games={this.state.games}/>
+                        {1 ? (
+                            <GameBlock />
+                        ) : (
+                            <p>Loading games...</p>
+                        )}
                     </div>
-                </React.StrictMode>
-            );
-    };
-}
+                </main>
+            </div>
+        </React.StrictMode>
+    );
+};
 
 export default HomeBody;
