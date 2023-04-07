@@ -8,11 +8,11 @@ export default function SignIn(props) {
 
     function getJSONPayload() {
         if (props.name === "man")
-            return JSON.stringify({m_email: email, m_pwd: password})
+            return JSON.stringify({m_email: email, m_pd: password})
         else if (props.name === "com")
-            return JSON.stringify({com_email: email, com_pwd: password})
+            return JSON.stringify({com_email: email, com_pd: password})
         else
-            return JSON.stringify({u_email: email, u_pwd: password})
+            return JSON.stringify({u_email: email, u_pd: password})
     }
 
     function handleClick() {

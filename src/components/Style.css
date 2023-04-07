@@ -40,8 +40,11 @@ li a:hover {
 }
 
 .display-block {
+    background-color: #2b3035;
     float: left;
     display: block;
-    width: 220px;
-    padding: 20px;
+    height: 300px;
+    width: 200px;
+    padding: 8px;
+    margin: 12px;
 }
