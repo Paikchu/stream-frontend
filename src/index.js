@@ -19,5 +19,5 @@ root.render(
             <Library />
         </Provider>
     </React.StrictMode>*/
-    <Library />
+    <App />
 );

@@ -4,7 +4,7 @@ function NavBarG (){
     return (
         <div>
             <div className="global_header">
-                <div className="container">
+                <div className="global_header_container">
                     <ul className="menu">
                         <li><a href="/home">store </a></li>
                         <li><a href="/library">library </a></li>
