@@ -8,6 +8,7 @@ const GameBlock = () => {
         fetch('home')
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 setData(data);
             });
     };
@@ -27,7 +28,7 @@ const GameBlock = () => {
                     {data.map(item => (
                         <div className="display-block">
                             <a rel="noreferrer" href="https://store.steampowered.com/" target="_blank">
-                                <img src={require("..//PlaceHolder.png")} style={{width: 200}}/>
+                                <img src={require("..//game_images/"+item.g_id+"/game_1.jpg")} style={{height: 150, width: 150}}/>
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <a>{item.g_price}</a>
                             </a>

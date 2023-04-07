@@ -42,6 +42,7 @@ class HomeBody extends React.Component{
             //console.log(this.state.games.result)
             return(
                 <React.StrictMode>
+                    <div>This is the homepage</div>
                     <div className="main-body">
                         <GameSeek saveGame={this.saveGame}/>
                         <GameBlock games={this.state.games}/>
