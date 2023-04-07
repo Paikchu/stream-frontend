@@ -27,7 +27,7 @@ const GameBlock = () => {
                     {data.map(item => (
                         <div className="display-block">
                             <a rel="noreferrer" href="https://store.steampowered.com/" target="_blank">
-                                <img src={require("..//PlaceHolder.png")} style={{width: 200}}/>
+                                <img src={require("..//img.png")} style={{width: 200}}/>
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <a>{item.g_price}</a>
                             </a>
