@@ -242,6 +242,7 @@ const Library = () => {
                         value={searchValue}
                         onChange={e => setSearchValue(e.target.value)}
                     />
+                    <div className="sidebar_2"></div>
                 </div>
             </div>
             <div id="content" style={{display: searchbox, flexDirection: 'column' }}>
@@ -250,7 +251,7 @@ const Library = () => {
                         <ul>
                             <li>
                                 <b>
-                                    <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{ border: "none", color: "black", textDecoration: "underline" }} className="link-button">
+                                    <Button type = "link" key={searchResult.g_id} onClick={() => handleJump(searchResult.g_id)}  style={{ border: "none", color: "white", textDecoration: "underline" }} className="link-button">
                                         {searchResult.g_name}
                                     </Button>
                                 </b>
@@ -338,8 +339,7 @@ const Library = () => {
                     commlist.map((comments)=> {
                         return (
                             <Comment
-                                actions={actions}
-                                author={<a>comment{user_id}</a>}
+                                author={<a>user{user_id}</a>}
                                 avatar={<Avatar src={require("../game_images/"+currentGameId.toString()+"/game_1.jpg")} alt="Han Solo"/>}
                                 content={
                                     <p>
@@ -362,6 +362,7 @@ const Library = () => {
                     <form onSubmit={handleSubmit} className="comment-form">
                         <center>
                             <label>
+                                <p style = {{color:"white"}}>Post your comment here</p>
                                 <textarea
                                     name="com_content"
                                     value={comment.com_content}
