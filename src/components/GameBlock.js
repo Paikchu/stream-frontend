@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./Style.css"
 import { useDispatch } from "react-redux";
-import { setProducts } from "../actions/productAction";
 
 const GameBlock = () => {
     const [data, setData] = useState(null);
