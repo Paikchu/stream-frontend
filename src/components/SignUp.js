@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { Login } from "../actions/userAction"
 import {useDispatch} from "react-redux";
 
 export default function SignUp(props) {

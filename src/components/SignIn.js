@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useDispatch } from "react-redux";
-import { Login } from "../actions/userAction";
+import { login } from "../features/user/userSlice";
 
 export default function SignIn(props) {
     const [email, setEmail] = useState("");
@@ -30,12 +30,12 @@ export default function SignIn(props) {
             }).then((response) => response.json())
                 .then((result) => {
                     console.log(result.message);
-                    dispatch(Login(email));
+                    dispatch(login({email}));
                     console.log(email);
-                    window.location = "/home";
                 })
                 .catch((error) => console.log("error"));
         }
+        window.location = "/home";
     }
 
     return (

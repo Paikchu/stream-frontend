@@ -2,16 +2,22 @@ import React from "react";
 import "./Style.css";
 import GameBlock from "./GameBlock";
 import { useSelector } from "react-redux";
+import store from "../store";
 
 const HomeBody = () => {
-    const userEmail = useSelector((state) => state.user.email);
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const userEmail = useSelector(state => state.user.email);
 
     return (
         <React.StrictMode>
             <div>
                 <main>
-                    <h1>This is the homepage</h1>
-                    {userEmail && <p>You are signed in as: {userEmail}</p>}
+                    <h1>Welcome to the Home Page</h1>
+                    {isLoggedIn ? (
+                        <p>You are signed in as: {userEmail}</p>
+                    ) : (
+                        <p>Please sign in to view your email</p>
+                    )}
                     <div className="main-body">
                         {1 ? (
                             <GameBlock />
