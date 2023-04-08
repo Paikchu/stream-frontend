@@ -14,10 +14,7 @@ import './/Bootstrap/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    /*<React.StrictMode>
         <Provider store={store}>
-            <Library />
-        </Provider>
-    </React.StrictMode>*/
-    <App />
+            <App />
+        </Provider>,
 );
