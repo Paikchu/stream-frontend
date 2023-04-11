@@ -25,6 +25,7 @@ const GameOrderList = () => {
             <table>
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Order ID</th>
                     <th>Game ID</th>
                     <th>Game Name</th>
@@ -36,12 +37,14 @@ const GameOrderList = () => {
                 <tbody>
                 {OrderList.map(order => (
                     <tr key={order.oid}>
+                        <td>
+                            <img src={require("../game_images/"+order.o_gid.toString()+"/game_3.jpg")} style={{ height: '40px', width: '80px' }} />
+                        </td>
                         <td>{order.oid}</td>
                         <td>{order.o_gid}</td>
                         <td>{order.g_name}</td>
                         <td>{order.o_value}</td>
                         <td>{order.o_time}</td>
-                        <td>Delete</td>
                         <td>
                             <button type="link" onClick={() => handleDeleteOrder(order.oid)} className="link-button">Delete</button>
                         </td>

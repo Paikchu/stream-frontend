@@ -6,7 +6,8 @@ import SignIn from "./components/SignIn";
 import NavBarG from "./components/NavBarG";
 import SignUp from "./components/SignUp";
 import Library from "./components/Library";
-import Order from "./components/Library";
+import Order from "./components/Order";
+import Cart from "./components/Cart";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,16 @@ const router = createBrowserRouter([
     {
         path: "/library",
         element: <Library />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/cart",
+        element: <Cart />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/order",
+        element: <Order />,
         errorElement: <ErrorPage />,
     },
     {

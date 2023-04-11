@@ -53,6 +53,7 @@ const CartList = () => {
             <table>
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Game ID</th>
                     <th>Game Name</th>
                     <th>Money</th>
@@ -64,6 +65,9 @@ const CartList = () => {
                 <tbody>
                 {CartList.map(cart => (
                     <tr key={cart.cart_gid}>
+                        <td>
+                            <img src={require("../game_images/"+cart.cart_gid.toString()+"/game_3.jpg")} style={{ height: '40px', width: '80px' }} />
+                        </td>
                         <td>{cart.g_id}</td>
                         <td>{cart.g_name}</td>
                         <td>{cart.g_price}</td>
