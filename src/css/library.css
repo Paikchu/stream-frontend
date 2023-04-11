@@ -16,7 +16,7 @@ body,
 }
 .sidebar {
     position: fixed;
-    top: 50%;
+    top: 32%;
     left: 0;
     transform: translateY(-50%);
 }
