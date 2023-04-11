@@ -68,13 +68,6 @@ const GameBlock = () => {
         return <div>Loading...</div>;
     }
 
-    const handleAddCart = cart_gid => {
-        fetch('/add_cart/2/'+cart_gid.toString())
-            .then((response) => response.json())
-            .catch((error) => console.log("error"));
-        setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, cart_gid]);
-    }
-
     return (
         <div>
             {data ? (
@@ -86,7 +79,6 @@ const GameBlock = () => {
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <p>{item.g_price > 0 ? item.g_price : "Free"}</p>
                             </a>
-                            <button type="link" onClick={() => handleAddCart(item.g_id)} className="link-button"> {hiddenButtons.includes(item.g_id) ? null : "Add to Cart"}</button>
                             <div className="button-container">
                                 <button onClick={() => handlePurchase(email,item.g_id)}>
                                     Purchase
