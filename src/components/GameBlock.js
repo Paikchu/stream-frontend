@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 const GameBlock = () => {
     const [data, setData] = useState(null);
     const dispatch = useDispatch();
+    const [hiddenButtons, setHiddenButtons] = useState([]);
     const fetchData = () => {
         fetch('home')
             .then(response => response.json())
@@ -22,6 +23,13 @@ const GameBlock = () => {
         return <div>Loading...</div>;
     }
 
+    const handleAddCart = cart_gid => {
+        fetch('/add_cart/2/'+cart_gid.toString())
+            .then((response) => response.json())
+            .catch((error) => console.log("error"));
+        setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, cart_gid]);
+    }
+
     return (
         <div>
             {data ? (
@@ -33,6 +41,7 @@ const GameBlock = () => {
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <a>{item.g_price > 0 ? item.g_price : "Free"}</a>
                             </a>
+                            <button type="link" onClick={() => handleAddCart(item.g_id)} className="link-button"> {hiddenButtons.includes(item.g_id) ? null : "Add to Cart"}</button>
                         </div>
                     ))}
                 </div>
