@@ -44,7 +44,12 @@ li a:hover {
     float: left;
     display: block;
     height: 300px;
-    width: 200px;
+    width: 250px;
     padding: 8px;
     margin: 12px;
+}
+
+.button-container {
+    margin-right: 20px;
+    float: left;
 }
