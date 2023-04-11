@@ -13,7 +13,7 @@ const GameBlock = () => {
         fetch('home')
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                console.log(data);
                 setData(data);
             });
     };
@@ -37,6 +37,22 @@ const GameBlock = () => {
             }).then((response) => response.json())
                 .then((result) => {
                     console.log("handlePurchase:")
+                    console.log(result);
+                })
+                .catch((error) => console.log(error));
+
+            fetch("/quick_order/"+email+"/"+g_id, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: 'Add'
+                })
+            }).then((response) => response.json())
+                .then((result) => {
+                    console.log("Quick_order:")
                     console.log(result);
                 })
                 .catch((error) => console.log(error));
