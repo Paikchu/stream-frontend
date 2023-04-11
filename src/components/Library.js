@@ -7,10 +7,11 @@ import ReactPaginate from 'react-paginate';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // import the styles
 import { Carousel } from 'react-bootstrap';
 import { Input, Modal } from 'antd';
+import { useSelector } from "react-redux";
 const ITEMS_PER_PAGE = 5;
 
 const Library = () => {
-    const [user_id, setUserId] = useState(2);
+    const user_id = useSelector(state => state.user.id);
     const [gameIds, setGameIds] = useState([]);
     const [gamelist, setgamelist] = useState([{
         "g_id": 2,
@@ -106,54 +107,7 @@ const Library = () => {
             .catch(error => {
                 console.error('Error posting comment:', error);
             });
-        // SubmitComm(newComment)
-        //     .then(data => {
-        //         console.log('Comment successfully posted:', data);
-        //         // Replace added comment with response data
-        //         setcommlist(commlist.map(item => {
-        //             if (item === newComment) {
-        //                 return data;
-        //             }
-        //             return item;
-        //         }));
-        //     })
-        //     .catch(error => {
-        //         console.error('Error posting comment:', error);
-        //         // Remove added comment if there is an error
-        //         setcommlist(commlist.filter(item => item !== newComment));
-        //     });
-        // setSubmitted(true);
-        // setComment({
-        //     com_gid: currentGameId.toString(),
-        //     comm_content: "",
-        // });
     };
-
-    // const SubmitComm = comment => {
-    //     if (!comment.comm_content) {
-    //         console.log('Comment content is empty.');
-    //         return;
-    //     }
-    //
-    //     fetch('/add_comm', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({"com_gid":currentGameId,"com_content":comment.comm_content})
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log('Comment successfully posted:', data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error posting comment:', error);
-    //         });
-    //     fetch('/getAllComm')
-    //         .then((response) => response.json())
-    //         .then(data => setcommlist(data))
-    //         .catch((error) => console.log("error"));
-    // }
 
     const like = () => {
         setLikes(1);
@@ -183,7 +137,7 @@ const Library = () => {
     ];
 
     useEffect(() => {
-        fetch('/getGameByUser/2')
+        fetch('/getGameByUser/' + user_id.toString())
             .then(response => response.json())
             .then(data => setGameIds(data))
     }, []);

@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../features/user/userSlice";
 
 export default function SignUp(props) {
     const [name, setName] = useState("");
@@ -12,6 +14,7 @@ export default function SignUp(props) {
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     function getJSONPayload() {
         if (props.name === "man")
@@ -34,6 +37,13 @@ export default function SignUp(props) {
             }).then((response) => response.json())
                 .then((result) => {
                     console.log(result.message);
+                    if(result.code !== 400){
+                        dispatch(login(email, result.code));
+                        navigate('/home');
+                    }
+                    else{
+                        alert(result.message);
+                    }
                 })
                 .catch((error) => console.log("error"));
         }

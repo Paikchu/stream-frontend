@@ -7,7 +7,8 @@ import store from "../store";
 const HomeBody = () => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const userEmail = useSelector(state => state.user.email);
-
+    const userID = useSelector(state => state.user.id);
+    
     return (
         <React.StrictMode>
             <div>
