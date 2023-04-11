@@ -12,8 +12,8 @@ export default function NavBarG(){
                     <ul className="menu">
                         <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/');}}>Store </a></li>
                         <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/library');}}>Library </a></li>
-                        <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/Cart');}}>Cart </a></li>
-                        <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/Order');}}>Order </a></li>
+                        <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/cart');}}>Cart </a></li>
+                        <li><a href='#' onClick={(e)=> {e.preventDefault();navigate('/order');}}>Order </a></li>
                         <li className="right-item"><a className="active" onClick={() => {navigate('/user-sign-in');}}>Login</a></li>
                     </ul>
                 </div>

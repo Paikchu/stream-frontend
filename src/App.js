@@ -7,6 +7,8 @@ import NavBarG from "./components/NavBarG";
 import SignUp from "./components/SignUp";
 import Library from "./components/Library";
 import Order from "./components/Library";
+import Cart from "./components/Cart";
+import GameOrderList from "./components/Order";
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                             <Route path='/' element={<HomeBody />} errorElement={<ErrorPage />} />
                             <Route path='/home' element={<HomeBody />} errorElement={<ErrorPage />} />
                             <Route path='/library' element={<Library/>} errorElement={<ErrorPage/>}/>
+                            <Route path='/cart' element={<Cart/>} errorElement={<ErrorPage/>}/>
+                            <Route path='/order' element={<GameOrderList/>} errorElement={<ErrorPage/>}/>
                             <Route path = '/sign-up' element={<SignUp name="user"/>} errorElement = {<ErrorPage/>}/>
                             <Route path='/user-sign-in' element={<SignIn name="user" />} errorElement={<ErrorPage />} />
                         </Routes>
