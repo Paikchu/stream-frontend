@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import {useSelector} from "react-redux";
 
 
 const CartList = () => {
+    const user_id = useSelector(state => state.user.id);
     const [CartList, setCartList] = useState([]);
     const [CurrentPrice, setCurrentPrice] = useState(99.99);
     const [Prices,setPrices] = useState([]);
     const [currentg_id, setcurrentg_id] = useState(1);
     useEffect(() => {
-        fetch('/getCartList/2')
+        fetch('/getCartList/'+user_id.toString())
             .then(response => response.json())
             .then(data => setCartList(data))
         fetch('/getPrices')
@@ -27,7 +29,7 @@ const CartList = () => {
             headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ o_uid:2,o_gid:cart_gid,o_value: Prices[cart_gid]["g_price"] })
+        body: JSON.stringify({ o_uid:user_id,o_gid:cart_gid,o_value: Prices[cart_gid]["g_price"] })
     })
             .then((response) => response.json())
             .then((data) => {
@@ -38,7 +40,7 @@ const CartList = () => {
     }
 
     const handleDeleteCart = cart_gid => {
-        fetch('/delete_cart/2/'+cart_gid.toString())
+        fetch('/delete_cart/'+user_id.toString() + '/' +cart_gid.toString())
             .then((response) => response.json())
             .then((data) => {
                 const updatedCartList = CartList.filter(cart => cart.cart_gid !== cart_gid);

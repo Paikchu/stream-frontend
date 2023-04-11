@@ -1,9 +1,11 @@
 import React, { useState,useEffect } from 'react';
+import {useSelector} from "react-redux";
 
 const GameOrderList = () => {
     const [OrderList,setOrderList] = useState([]);
+    const user_id = useSelector(state => state.user.id);
     useEffect(() => {
-        fetch('/getOrderList/2')
+        fetch('/getOrderList/' + user_id.toString())
             .then(response => response.json())
             .then(data => setOrderList(data))
     }, []);
