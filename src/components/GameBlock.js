@@ -3,11 +3,13 @@ import "./Style.css"
 import { useDispatch } from "react-redux";
 import {login} from "../features/user/userSlice";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const GameBlock = () => {
     const [data, setData] = useState(null);
     const dispatch = useDispatch();
-    const [hiddenButtons, setHiddenButtons] = useState([]);
+    const [hiddenPurchaseButtons, setHiddenPurchaseButtons] = useState([]);
+    const [hiddenCartButtons, setHiddenCartButtons] = useState([]);
     const email = useSelector(state => state.user.email);
     const fetchData = () => {
         fetch('home')
@@ -56,6 +58,7 @@ const GameBlock = () => {
                     console.log(result);
                 })
                 .catch((error) => console.log(error));
+            setHiddenPurchaseButtons((prevHiddenButtons) => [...prevHiddenButtons, g_id]);
         }
     }
 
@@ -77,6 +80,7 @@ const GameBlock = () => {
                     console.log(result);
                 })
                 .catch((error) => console.log(error));
+            setHiddenCartButtons((prevHiddenButtons) => [...prevHiddenButtons, g_id]);
         }
     }
 
@@ -90,19 +94,19 @@ const GameBlock = () => {
                 <div>
                     {data.map(item => (
                         <div className="display-block">
-                            <a rel="noreferrer" href="https://store.steampowered.com/" target="_blank">
+                            <a rel="noreferrer" href={'/singlegame/'+item.g_id.toString()} target="_blank">
                                 <img src={require("..//game_images/"+item.g_id+"/game_1.jpg")} style={{height: 150, width: 150}}/>
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <p>{item.g_price > 0 ? item.g_price : "Free"}</p>
                             </a>
                             <div className="button-container">
                                 <button onClick={() => handlePurchase(email,item.g_id)}>
-                                    Purchase
+                                    {hiddenPurchaseButtons.includes(item.g_id) ? null : "Purchase"}
                                 </button>
                             </div>
                             <div className="button-container">
                                 <button onClick={() => handleAdd(email,item.g_id)}>
-                                    Add to Cart
+                                    {hiddenPurchaseButtons.includes(item.g_id)||hiddenCartButtons.includes(item.g_id) ? null : "Add to Cart"}
                                 </button>
                             </div>
                         </div>
