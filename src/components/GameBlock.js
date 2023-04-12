@@ -4,20 +4,34 @@ import { useDispatch } from "react-redux";
 import {login} from "../features/user/userSlice";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
+
 
 const GameBlock = () => {
+    const navigate = useNavigate();
+    const user_id = useSelector(state => state.user.id);
     const [data, setData] = useState(null);
     const dispatch = useDispatch();
     const [hiddenPurchaseButtons, setHiddenPurchaseButtons] = useState([]);
     const [hiddenCartButtons, setHiddenCartButtons] = useState([]);
     const email = useSelector(state => state.user.email);
     const fetchData = () => {
-        fetch('home')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                setData(data);
-            });
+        if (user_id > 0 ) {
+            fetch('/home/'+user_id.toString())
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setData(data);
+                });
+        }
+        else {
+            fetch('/home1')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setData(data);
+                });
+        }
     };
 
     useEffect(()=>{
@@ -94,20 +108,23 @@ const GameBlock = () => {
                 <div>
                     {data.map(item => (
                         <div className="display-block">
-                            <a rel="noreferrer" href={'/singlegame/'+item.g_id.toString()} target="_blank">
+                            <a href='#' onClick={(e)=> {e.preventDefault();navigate('/singlegame/'+item.g_id.toString());}}>
                                 <img src={require("..//game_images/"+item.g_id+"/game_1.jpg")} style={{height: 150, width: 150}}/>
                                 <p key={item.g_id}>{item.g_name}</p>
                                 <p>{item.g_price > 0 ? item.g_price : "Free"}</p>
                             </a>
                             <div className="button-container">
+                                {hiddenPurchaseButtons.includes(item.g_id) ?<p color = "white">You have bought</p>:
                                 <button onClick={() => handlePurchase(email,item.g_id)}>
-                                    {hiddenPurchaseButtons.includes(item.g_id) ? null : "Purchase"}
-                                </button>
+                                    Purchase
+                                </button>}
                             </div>
+
                             <div className="button-container">
+                                {hiddenPurchaseButtons.includes(item.g_id)||hiddenCartButtons.includes(item.g_id) ? null:
                                 <button onClick={() => handleAdd(email,item.g_id)}>
-                                    {hiddenPurchaseButtons.includes(item.g_id)||hiddenCartButtons.includes(item.g_id) ? null : "Add to Cart"}
-                                </button>
+                                    Add to Cart
+                                </button>}
                             </div>
                         </div>
                     ))}

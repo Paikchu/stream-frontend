@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // import the st
 import { Carousel } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
-const Library = () => {
+const SingleGame = () => {
     const { gameId } = useParams();
     const [user_id, setUserId] = useState(2);
     const [gamelist, setgamelist] = useState([]);
@@ -130,4 +130,4 @@ const Library = () => {
 
     );
 }
-export default Library;
+export default SingleGame;
